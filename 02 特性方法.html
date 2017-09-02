@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+// 定义对象
+var obj = {
+	color: 'red',
+	num: 100,
+	__data: {
+		color: 'blue'
+	}
+}
+// 定义特性方法
+Object.defineProperty(obj, 'color', {
+	// 取值器方法
+	get: function() {
+		console.log(this, arguments)
+		// 绝对不能获取该属性值
+		// console.log(this.color)
+		return this.__data.color
+		// return 'green'
+	},
+	// 赋值器方法
+	set: function(color) {
+		console.log(this, arguments)
+		console.log(111)
+		// 绝对不能直接修改该属性值
+		// this.color = color;
+		this.__data.color = color;
+	},
+	// value和writable失效
+	// value: 'gold'
+	// writable: false
+	// enumerable和configurable可以正常定义
+	enumerable: true,
+	configurable: true
+})
+// 修改属性
+obj.color = 'pink'
+console.log(obj.color)
+</script>
+</body>
+</html>

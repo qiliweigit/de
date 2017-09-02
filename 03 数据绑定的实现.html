@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<h1>{{title}}</h1>
+		<h2>{{info}}</h2>
+	</div>
+<script type="text/javascript">
+// 定义数据
+var data = {
+	__data: {}
+}
+// 获取视图
+var tpl = document.getElementById('app').innerHTML
+// 检测data数据的变化
+Object.defineProperty(data, 'title', {
+	// 取值器方法
+	get: function() {
+		return this.__data.title;
+	},
+	// 赋值器方法
+	set: function(val) {
+		// var str = tpl.replace('{{title}}', val);
+		// // 更新视图
+		// document.getElementById('app').innerHTML = str;
+		// 存储数据
+		this.__data.title = val
+		formatTpl(tpl, this.__data)
+	}
+})
+Object.defineProperty(data, 'info', {
+	// 取值器
+	get: function() {
+		return this.__data.info
+	},
+	// 赋值器
+	set: function(val) {
+		// var str = tpl.replace('{{info}}', val);
+		// // 更新视图
+		// document.getElementById('app').innerHTML = str;
+		// 存储数据
+		this.__data.info = val
+		formatTpl(tpl, this.__data)
+	}
+})
+// 格式化模板方法
+function formatTpl(tpl, data) {
+	document.getElementById('app').innerHTML = tpl.replace(/\{\{(\w+)\}\}/g, function(match, $1) {
+		return data[$1]
+	})
+}
+data.title = '爱创课堂';
+data.info = '专业前端培训学校'
+</script>
+</body>
+</html>
